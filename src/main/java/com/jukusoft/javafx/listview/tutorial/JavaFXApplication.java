@@ -1,6 +1,7 @@
 package com.jukusoft.javafx.listview.tutorial;
 
 import com.jukusoft.javafx.listview.tutorial.controller.WindowController;
+import com.jukusoft.javafx.listview.tutorial.model.ListEntry;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +10,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Justin on 01.09.2017.
@@ -30,6 +33,9 @@ public class JavaFXApplication extends Application {
     //JavaFX window controller (MVC principle)
     protected WindowController controller = null;
 
+    //list with all list entries
+    protected List<ListEntry> entryList = new ArrayList<>();
+
     public void start(Stage primaryStage) throws Exception {
         //create new stage (window)
         this.stage = new Stage();
@@ -39,12 +45,18 @@ public class JavaFXApplication extends Application {
         this.stage.setWidth(600);
         this.stage.setHeight(440);
 
+        //create some list entries
+        entryList.add(new ListEntry("Title 1", "file:data/icon/questions.png"));
+        entryList.add(new ListEntry("Title 2", "file:data/icon/questions.png"));
+        entryList.add(new ListEntry("Title 3", "file:data/icon/questions.png"));
+        entryList.add(new ListEntry("Title 4", "file:data/icon/questions.png"));
+
         // load fxml file
         try {
             FXMLLoader loader = new FXMLLoader(new File(FXML_PATH).toURI().toURL());
 
             //create and set controller
-            this.controller = new WindowController();
+            this.controller = new WindowController(this.entryList);
             loader.setController(this.controller);
 
             //load and get root pane (AnchorPane)
